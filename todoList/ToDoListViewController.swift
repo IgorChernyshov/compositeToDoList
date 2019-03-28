@@ -47,7 +47,7 @@ class ToDoListViewController: UIViewController {
     let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
       guard let taskName = alertController.textFields?[0].text, taskName != "" else { return }
       let newTask = Task(name: taskName, subtasks: [])
-      self?.task.subtasks?.append(newTask)
+      self?.task.subtasks.append(newTask)
       self?.tableView.reloadData()
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -64,21 +64,21 @@ class ToDoListViewController: UIViewController {
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return task.subtasks?.count ?? 0
+    return task.subtasks.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "toDoListCell") else { return UITableViewCell() }
-    cell.textLabel?.text = task.subtasks?[indexPath.row].name
-    cell.detailTextLabel?.text = "Has \(task.subtasks?[indexPath.row].subtasks?.count ?? 0) subtasks"
+    cell.textLabel?.text = task.subtasks[indexPath.row].name
+    cell.detailTextLabel?.text = "Has \(task.subtasks[indexPath.row].subtasks.count) subtasks"
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let subtaskVC = storyboard?.instantiateViewController(withIdentifier: "ToDoListViewController") as? ToDoListViewController,
-      let selectedTask = task.subtasks?[indexPath.row]
-      else { return }
+    guard let subtaskVC = storyboard?.instantiateViewController(withIdentifier: "ToDoListViewController")
+      as? ToDoListViewController else { return }
     
+    let selectedTask = task.subtasks[indexPath.row]
     subtaskVC.title = selectedTask.name
     subtaskVC.task = selectedTask
     navigationController?.pushViewController(subtaskVC, animated: true)

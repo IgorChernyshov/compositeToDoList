@@ -10,10 +10,10 @@ import Foundation
 
 class Task {
   
-  var name: String?
-  var subtasks: [Task]?
+  var name: String
+  var subtasks: [Task]
   
-  init(name: String?, subtasks: [Task]?) {
+  init(name: String, subtasks: [Task]) {
     self.name = name
     self.subtasks = subtasks
   }
